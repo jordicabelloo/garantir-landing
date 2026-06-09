@@ -10,19 +10,19 @@
     "db:migrate": "node scripts/migrate.js"
   },
   "dependencies": {
-    "next": "15.3.3",
+    "next": "^16.2.7",
+    "pg": "^8.13.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "pg": "^8.13.3",
     "resend": "^4.6.0"
   },
   "devDependencies": {
     "@types/node": "^22",
+    "@types/pg": "^8.11.11",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/pg": "^8.11.11",
-    "typescript": "^5",
     "eslint": "^9",
-    "eslint-config-next": "15.3.3"
+    "eslint-config-next": "^16.2.7",
+    "typescript": "^5"
   }
 }
