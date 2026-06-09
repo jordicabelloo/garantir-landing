@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Garantir — the pre-deployment verdict for finance AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Hanken+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0e0d0b;
+    --ink-2:#161410;
+    --ink-3:#1d1a14;
+    --bone:#ece6d8;
+    --bone-dim:#9d978a;
+    --bone-faint:#6a655b;
+    --signal:#cbf24e;
+    --signal-deep:#a9cf2c;
+    --amber:#efb14a;
+    --red:#e2573e;
+    --line:rgba(236,230,216,0.13);
+    --line-soft:rgba(236,230,216,0.07);
+    --serif:"Fraunces",Georgia,serif;
+    --sans:"Hanken Grotesk",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+    --maxw:1240px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:var(--sans);
+    font-weight:400;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* film grain overlay */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    pointer-events:none;
+    opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection{background:var(--signal);color:var(--ink)}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
+  @media(max-width:720px){.wrap{padding:0 22px}}
+
+  /* ---------- mono utility / forensic labels ---------- */
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--signal);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;height:1px;background:var(--signal);
+    display:inline-block;
+  }
+  .sec-no{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.18em;
+    color:var(--bone-faint);
+    text-transform:uppercase;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 40px;
+    transition:background .4s ease,border-color .4s ease,padding .4s ease;
+    border-bottom:1px solid transparent;
+  }
+  nav.scrolled{
+    background:rgba(14,13,11,.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line-soft);
+    padding:14px 40px;
+  }
+  @media(max-width:720px){nav,nav.scrolled{padding:14px 22px}}
+  .brand{
+    font-family:var(--serif);
+    font-variation-settings:"opsz" 30;
+    font-weight:600;
+    font-size:23px;
+    letter-spacing:.02em;
+    color:var(--bone);
+    text-decoration:none;
+    display:flex;align-items:center;gap:9px;
+  }
+  .brand .dot{width:8px;height:8px;background:var(--signal);border-radius:50%;display:inline-block;box-shadow:0 0 12px var(--signal)}
+  .nav-links{display:flex;align-items:center;gap:34px}
+  .nav-links a{
+    font-family:var(--mono);font-size:12px;letter-spacing:.04em;
+    color:var(--bone-dim);text-decoration:none;transition:color .2s;
+  }
+  .nav-links a:hover{color:var(--bone)}
+  .nav-cta{
+    font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.03em;
+    color:var(--ink)!important;background:var(--signal);
+    padding:9px 16px;border-radius:2px;
+    transition:transform .2s,box-shadow .2s;
+  }
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(203,242,78,.28)}
+  @media(max-width:880px){.nav-links a:not(.nav-cta){display:none}}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.02em;
+    text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+    padding:15px 24px;border-radius:2px;cursor:pointer;border:1px solid transparent;
+    transition:transform .22s ease,box-shadow .22s ease,background .22s,color .22s,border-color .22s;
+  }
+  .btn-primary{background:var(--signal);color:var(--ink)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(203,242,78,.3)}
+  .btn-primary .arr{transition:transform .22s}
+  .btn-primary:hover .arr{transform:translateX(4px)}
+  .btn-ghost{background:transparent;color:var(--bone);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--bone-dim);background:rgba(236,230,216,.04)}
+
+  /* ---------- section frame ---------- */
+  section{position:relative}
+  .section-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    gap:20px;border-top:1px solid var(--line);
+    padding-top:22px;margin-bottom:46px;
+  }
+  @media(max-width:560px){.section-head{flex-direction:column;gap:6px;align-items:flex-start}}
+
+  h2{
+    font-family:var(--serif);
+    font-variation-settings:"opsz" 80,"SOFT" 0;
+    font-weight:500;
+    line-height:1.03;
+    letter-spacing:-.015em;
+    font-size:clamp(34px,5.4vw,62px);
+  }
+  h2 em{font-style:italic;font-variation-settings:"opsz" 80}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal[data-d="1"]{transition-delay:.08s}
+  .reveal[data-d="2"]{transition-delay:.16s}
+  .reveal[data-d="3"]{transition-delay:.24s}
+  .reveal[data-d="4"]{transition-delay:.32s}
+  .reveal[data-d="5"]{transition-delay:.4s}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  /* =========================================================
+     HERO
+  ========================================================= */
+  .hero{padding:170px 0 90px;position:relative;overflow:hidden}
+  .hero::after{
+    /* faint ledger grid behind hero */
+    content:"";position:absolute;inset:0;z-index:-1;opacity:.5;
+    background:
+      linear-gradient(var(--line-soft) 1px,transparent 1px) 0 0/100% 64px,
+      radial-gradient(900px 520px at 78% 8%,rgba(203,242,78,.05),transparent 60%);
+    -webkit-mask-image:linear-gradient(to bottom,#000 40%,transparent);
+            mask-image:linear-gradient(to bottom,#000 40%,transparent);
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;
+  }
+  @media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:48px}}
+
+  h1{
+    font-family:var(--serif);
+    font-variation-settings:"opsz" 144,"SOFT" 0,"WONK" 0;
+    font-weight:500;
+    font-size:clamp(46px,7vw,90px);
+    line-height:.96;
+    letter-spacing:-.025em;
+    margin:26px 0 28px;
+  }
+  h1 .l2{color:var(--bone-dim)}
+  h1 em{font-style:italic;color:var(--signal);font-variation-settings:"opsz" 144}
+  .deck{
+    font-size:clamp(17px,1.5vw,20px);
+    color:var(--bone-dim);
+    max-width:30em;line-height:1.55;margin-bottom:36px;
+  }
+  .deck b{color:var(--bone);font-weight:600}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero-meta{
+    margin-top:40px;display:flex;gap:28px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--bone-faint);
+  }
+  .hero-meta span{display:flex;align-items:center;gap:8px}
+  .hero-meta span::before{content:"";width:5px;height:5px;background:var(--signal-deep);border-radius:50%}
+
+  /* ---- twinning document visual ---- */
+  .twin-stage{position:relative;height:430px;display:flex;align-items:center;justify-content:center}
+  .doc{
+    position:absolute;width:300px;background:var(--ink-2);
+    border:1px solid var(--line);border-radius:6px;padding:22px 22px 24px;
+    box-shadow:0 30px 70px rgba(0,0,0,.5);
+  }
+  .doc.real{transform:translate(-46px,-30px) rotate(-5deg);opacity:.42;filter:saturate(.6)}
+  .doc.twin{transform:translate(40px,26px) rotate(3deg);z-index:3;overflow:hidden}
+  .doc.twin::after{
+    /* scan line */
+    content:"";position:absolute;left:0;right:0;height:30px;top:-30px;
+    background:linear-gradient(to bottom,transparent,rgba(203,242,78,.18),rgba(203,242,78,.5));
+    border-bottom:1.5px solid var(--signal);
+    animation:scan 4.6s cubic-bezier(.5,.05,.4,1) infinite;
+    pointer-events:none;
+  }
+  @keyframes scan{
+    0%,8%{top:-30px}
+    52%,60%{top:100%}
+    100%{top:100%}
+  }
+  .doc-tag{
+    position:absolute;top:-11px;left:18px;font-family:var(--mono);font-size:9.5px;
+    letter-spacing:.18em;padding:3px 9px;border-radius:2px;text-transform:uppercase;
+  }
+  .real .doc-tag{background:var(--ink-3);color:var(--bone-faint);border:1px solid var(--line)}
+  .twin .doc-tag{background:var(--signal);color:var(--ink)}
+  .doc-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:14px}
+  .doc-head .ti{font-family:var(--serif);font-size:17px;font-variation-settings:"opsz" 30;font-weight:600}
+  .doc-head .sub{font-family:var(--mono);font-size:9px;color:var(--bone-faint);letter-spacing:.1em}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:7px 0;font-family:var(--mono);font-size:11px}
+  .row .k{color:var(--bone-faint);letter-spacing:.04em}
+  .row .v{color:var(--bone);text-align:right}
+  .row.sensitive .v{position:relative}
+  /* redaction bars in twin */
+  .twin .row.sensitive .v{
+    color:transparent;background:var(--signal-deep);border-radius:2px;
+    height:11px;min-width:74px;display:inline-block;opacity:.85;
+    animation:redact 4.6s cubic-bezier(.5,.05,.4,1) infinite;
+  }
+  .twin .row.sensitive:nth-of-type(2) .v{animation-delay:0s}
+  @keyframes redact{
+    0%,18%{opacity:0;background:transparent;color:var(--bone)}
+    30%,100%{opacity:.85;background:var(--signal-deep);color:transparent}
+  }
+  .twin .row.kept .v{color:var(--signal)}
+  .doc-foot{margin-top:14px;border-top:1px dashed var(--line);padding-top:11px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:9px;color:var(--bone-faint);letter-spacing:.08em}
+  .doc-foot .ok{color:var(--signal);display:flex;align-items:center;gap:5px}
+  .caption-pill{
+    position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);
+    font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--bone-dim);
+    background:var(--ink-2);border:1px solid var(--line);padding:7px 13px;border-radius:30px;white-space:nowrap;z-index:5;
+  }
+  .caption-pill b{color:var(--signal)}
+  @media(max-width:980px){.twin-stage{height:380px;margin-top:6px}}
+
+  /* =========================================================
+     PROBLEM
+  ========================================================= */
+  .problem{padding:96px 0}
+  .litany{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:0;
+    border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:8px;
+  }
+  @media(max-width:680px){.litany{grid-template-columns:1fr}}
+  .lit{
+    padding:24px 26px;border-bottom:1px solid var(--line);
+    position:relative;transition:background .3s;
+  }
+  .lit:nth-child(odd){border-right:1px solid var(--line)}
+  @media(max-width:680px){.lit:nth-child(odd){border-right:none}}
+  .lit:hover{background:var(--ink-2)}
+  .lit .n{font-family:var(--mono);font-size:10px;color:var(--bone-faint);letter-spacing:.1em}
+  .lit .t{font-family:var(--serif);font-variation-settings:"opsz" 40;font-size:21px;font-weight:500;margin-top:7px;line-height:1.2}
+  .lit .d{font-size:13.5px;color:var(--bone-dim);margin-top:6px}
+  .problem-tail{
+    margin-top:40px;font-family:var(--serif);font-variation-settings:"opsz" 60;
+    font-size:clamp(22px,3vw,34px);font-weight:500;line-height:1.25;max-width:18em;
+  }
+  .problem-tail .hl{color:var(--signal)}
+
+  /* =========================================================
+     PROOF / stats
+  ========================================================= */
+  .proof{padding:96px 0;background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:6px}
+  @media(max-width:760px){.stats{grid-template-columns:1fr;gap:0}}
+  .stat{padding:36px 32px;position:relative}
+  .stat:not(:last-child){border-right:1px solid var(--line)}
+  @media(max-width:760px){.stat{border-right:none!important;border-bottom:1px solid var(--line)}.stat:last-child{border-bottom:none}}
+  .stat .num{
+    font-family:var(--serif);font-variation-settings:"opsz" 144;
+    font-size:clamp(56px,8vw,84px);font-weight:500;line-height:.9;letter-spacing:-.03em;
+    display:flex;align-items:baseline;
+  }
+  .stat .num .u{font-size:.42em;color:var(--bone-dim);margin-left:4px}
+  .stat .lbl{font-size:14.5px;color:var(--bone);margin-top:16px;max-width:20em;line-height:1.4}
+  .stat .src{font-family:var(--mono);font-size:10px;color:var(--bone-faint);letter-spacing:.1em;margin-top:12px;text-transform:uppercase}
+  .proof-tail{margin-top:42px;font-size:clamp(17px,2vw,22px);color:var(--bone-dim);max-width:34em}
+  .proof-tail b{color:var(--bone);font-weight:600}
+
+  /* =========================================================
+     HOW IT WORKS
+  ========================================================= */
+  .how{padding:104px 0}
+  .how-lead{font-size:clamp(17px,1.7vw,21px);color:var(--bone-dim);max-width:40em;margin-bottom:14px;line-height:1.6}
+  .how-lead b{color:var(--bone);font-weight:600}
+  .how-lead .sig{color:var(--signal)}
+
+  .flow{
+    margin-top:54px;display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:stretch;
+    border:1px solid var(--line);border-radius:8px;background:var(--ink-2);overflow:hidden;
+  }
+  .flow-node{padding:36px 30px;position:relative}
+  .flow-node .step{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--bone-faint);text-transform:uppercase}
+  .flow-node .nm{font-family:var(--serif);font-variation-settings:"opsz" 50;font-size:25px;font-weight:500;margin-top:12px}
+  .flow-node .ds{font-size:13.5px;color:var(--bone-dim);margin-top:9px;line-height:1.45}
+  .flow-node .ic{width:38px;height:38px;border:1px solid var(--line);border-radius:7px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+  .flow-node .ic svg{width:19px;height:19px;stroke:var(--signal);fill:none;stroke-width:1.6}
+  .flow-node.mid .ic{border-color:var(--signal);box-shadow:0 0 24px rgba(203,242,78,.16)}
+  .flow-arrow{display:flex;align-items:center;justify-content:center;width:74px;position:relative;background:var(--ink-2)}
+  .flow-arrow .track{width:100%;height:1px;background:var(--line);position:relative;overflow:hidden}
+  .flow-arrow .track::after{content:"";position:absolute;top:-1.5px;left:-30%;width:30%;height:4px;background:var(--signal);border-radius:4px;filter:blur(.3px);animation:travel 2.6s linear infinite}
+  @keyframes travel{to{left:120%}}
+  @media(max-width:840px){
+    .flow{grid-template-columns:1fr}
+    .flow-arrow{width:auto;height:54px;flex-direction:column}
+    .flow-arrow .track{width:1px;height:100%}
+    .flow-arrow .track::after{width:4px;height:30%;left:-1.5px;top:-30%;animation:travelV 2.6s linear infinite}
+    @keyframes travelV{to{top:120%}}
+  }
+  .trust-line{
+    margin-top:30px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:12px;color:var(--bone-dim);letter-spacing:.03em;
+    padding:16px 20px;border:1px dashed var(--line);border-radius:6px;
+  }
+  .trust-line .lk{color:var(--signal);font-weight:600}
+
+  /* =========================================================
+     WHAT GETS TESTED + the climax
+  ========================================================= */
+  .tested{padding:104px 0 0}
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--line);margin-top:4px}
+  @media(max-width:680px){.checks{grid-template-columns:1fr}}
+  .chk{
+    display:flex;gap:18px;align-items:flex-start;padding:26px 24px;
+    border-bottom:1px solid var(--line);transition:background .3s;
+  }
+  .chk:nth-child(odd){border-right:1px solid var(--line)}
+  @media(max-width:680px){.chk:nth-child(odd){border-right:none}}
+  .chk:hover{background:var(--ink-2)}
+  .chk .mark{
+    flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:1px solid var(--signal);
+    display:flex;align-items:center;justify-content:center;margin-top:2px;
+  }
+  .chk .mark svg{width:13px;height:13px;stroke:var(--signal);fill:none;stroke-width:2.2}
+  .chk .q{font-size:17px;line-height:1.4;color:var(--bone)}
+  .chk.crit .mark{border-color:var(--amber)}
+  .chk.crit .mark svg{stroke:var(--amber)}
+  .chk.crit .q b{color:var(--amber)}
+
+  /* climax band */
+  .climax{
+    margin-top:0;padding:120px 0;text-align:center;position:relative;overflow:hidden;
+    background:radial-gradient(700px 360px at 50% 30%,rgba(226,87,62,.07),transparent 70%);
+  }
+  .climax .pre{font-family:var(--serif);font-variation-settings:"opsz" 90;font-style:italic;font-weight:400;font-size:clamp(22px,3.4vw,38px);color:var(--bone-dim);line-height:1.3}
+  .climax .big{font-family:var(--serif);font-variation-settings:"opsz" 144;font-weight:500;font-size:clamp(48px,9vw,118px);line-height:.98;letter-spacing:-.03em;margin-top:18px}
+  .climax .wrong-wrap{position:relative;display:inline-block;margin-top:6px}
+  .climax .wrong{font-family:var(--serif);font-variation-settings:"opsz" 144;font-weight:600;font-size:clamp(56px,11vw,150px);color:var(--red);line-height:.95;letter-spacing:-.03em}
+  .stamp{
+    position:absolute;top:46%;left:50%;
+    transform:translate(-50%,-50%) rotate(-13deg) scale(.6);opacity:0;
+    border:3px solid var(--red);color:var(--red);border-radius:6px;
+    font-family:var(--mono);font-weight:700;font-size:clamp(11px,1.6vw,15px);
+    letter-spacing:.14em;padding:8px 16px;text-transform:uppercase;white-space:nowrap;
+    box-shadow:0 0 0 4px rgba(226,87,62,.08) inset;
+  }
+  .climax.in .stamp{animation:slam .55s cubic-bezier(.2,1.4,.4,1) .55s forwards}
+  @keyframes slam{0%{opacity:0;transform:translate(-50%,-50%) rotate(-13deg) scale(1.7)}60%{opacity:1}100%{opacity:1;transform:translate(-50%,-50%) rotate(-13deg) scale(1)}}
+
+  /* =========================================================
+     VERDICT
+  ========================================================= */
+  .verdict{padding:104px 0}
+  .verdict-lead{font-size:clamp(16px,1.6vw,19px);color:var(--bone-dim);max-width:36em;margin-bottom:46px;line-height:1.55}
+  .vgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media(max-width:880px){.vgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.vgrid{grid-template-columns:1fr}}
+  .vcard{
+    position:relative;background:var(--ink-2);border:1px solid var(--line);
+    border-radius:8px;padding:26px 22px 24px;overflow:hidden;
+    transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;
+  }
+  .vcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--c);transition:height .3s}
+  .vcard:hover{transform:translateY(-6px);border-color:var(--c);box-shadow:0 22px 50px rgba(0,0,0,.5)}
+  .vcard:hover::before{height:6px}
+  .vcard .vno{font-family:var(--mono);font-size:10px;color:var(--bone-faint);letter-spacing:.14em}
+  .vcard .vdot{width:9px;height:9px;border-radius:50%;background:var(--c);display:inline-block;margin-bottom:18px;box-shadow:0 0 14px var(--c)}
+  .vcard .vt{font-family:var(--serif);font-variation-settings:"opsz" 50;font-size:24px;font-weight:600;line-height:1.05;color:var(--bone)}
+  .vcard .vd{font-size:13.5px;color:var(--bone-dim);margin-top:11px;line-height:1.45}
+  .vcard.go{--c:var(--signal)}
+  .vcard.lim{--c:var(--signal-deep)}
+  .vcard.hum{--c:var(--amber)}
+  .vcard.no{--c:var(--red)}
+  .verdict-tail{margin-top:42px;font-family:var(--serif);font-variation-settings:"opsz" 60;font-size:clamp(20px,2.6vw,30px);font-weight:500;line-height:1.3;max-width:20em}
+  .verdict-tail .hl{color:var(--signal)}
+
+  /* =========================================================
+     FINAL CTA
+  ========================================================= */
+  .final{padding:120px 0;border-top:1px solid var(--line);position:relative;overflow:hidden}
+  .final::after{content:"";position:absolute;inset:0;z-index:-1;opacity:.55;background:radial-gradient(800px 460px at 50% 120%,rgba(203,242,78,.07),transparent 60%)}
+  .final .inner{text-align:center;max-width:21em;margin:0 auto}
+  .final h2{font-size:clamp(40px,6.2vw,78px);margin:22px 0 26px}
+  .final h2 em{font-style:italic;color:var(--signal)}
+  .final .pipe{
+    display:flex;gap:10px 22px;justify-content:center;flex-wrap:wrap;
+    font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--bone-dim);
+    text-transform:uppercase;margin-bottom:38px;
+  }
+  .final .pipe span{display:flex;align-items:center;gap:9px}
+  .final .pipe span::before{content:"›";color:var(--signal)}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:46px 0 56px}
+  .foot-grid{display:flex;justify-content:space-between;align-items:flex-start;gap:30px;flex-wrap:wrap}
+  .foot-brand{font-family:var(--serif);font-variation-settings:"opsz" 30;font-size:20px;font-weight:600;display:flex;align-items:center;gap:9px}
+  .foot-brand .dot{width:7px;height:7px;background:var(--signal);border-radius:50%}
+  .foot-tag{font-size:13px;color:var(--bone-dim);max-width:24em;margin-top:10px;line-height:1.5}
+  .foot-note{font-family:var(--mono);font-size:10.5px;color:var(--bone-faint);letter-spacing:.05em;line-height:1.7;text-align:right;max-width:26em}
+  @media(max-width:640px){.foot-note{text-align:left}}
+
+  /* registration corner ticks (forensic detail) */
+  .ticked{position:relative}
+  .ticked::before,.ticked::after{content:"";position:absolute;width:9px;height:9px;border-color:var(--bone-faint);opacity:.5}
+  .ticked::before{top:-1px;left:-1px;border-top:1px solid;border-left:1px solid}
+  .ticked::after{bottom:-1px;right:-1px;border-bottom:1px solid;border-right:1px solid}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#top" class="brand"><span class="dot"></span>Garantir</a>
+  <div class="nav-links">
+    <a href="#problem">The problem</a>
+    <a href="#how">How it works</a>
+    <a href="#tested">What we test</a>
+    <a href="#cta" class="nav-cta">Get the verdict</a>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow reveal">Pre-deployment validation · finance &amp; regulated teams</span>
+      <h1 class="reveal" data-d="1">
+        Test it on<br>the files that<br><em>scare</em> you.
+      </h1>
+      <p class="deck reveal" data-d="2">
+        Not demo data. Not fake invoices. Not the perfect files built for a sales call.
+        Garantir proves whether a finance AI works on <b>your</b> edge cases — before it ever touches real money.
+      </p>
+      <div class="hero-cta reveal" data-d="3">
+        <a href="#cta" class="btn btn-primary">Get the Garantir verdict <span class="arr">→</span></a>
+        <a href="#tested" class="btn btn-ghost">See what we test</a>
+      </div>
+      <div class="hero-meta reveal" data-d="4">
+        <span>Real data never leaves</span>
+        <span>Graded independently</span>
+        <span>One verdict, whole committee</span>
+      </div>
+    </div>
+
+    <!-- twinning visual -->
+    <div class="twin-stage reveal" data-d="3">
+      <div class="doc real">
+        <span class="doc-tag">Your file · sealed</span>
+        <div class="doc-head">
+          <div class="ti">Invoice</div>
+          <div class="sub">AP-0481</div>
+        </div>
+        <div class="row sensitive"><span class="k">Supplier</span><span class="v">Halden &amp; Roe Ltd</span></div>
+        <div class="row"><span class="k">Invoice&nbsp;no</span><span class="v">INV-99204</span></div>
+        <div class="row sensitive"><span class="k">Total</span><span class="v">£18,420.00</span></div>
+        <div class="row sensitive"><span class="k">IBAN</span><span class="v">GB29 NWBK 6016</span></div>
+        <div class="row"><span class="k">Due&nbsp;date</span><span class="v">30 Jun 2026</span></div>
+      </div>
+
+      <div class="doc twin ticked">
+        <span class="doc-tag">Local twin</span>
+        <div class="doc-head">
+          <div class="ti">Invoice</div>
+          <div class="sub">AP-0481</div>
+        </div>
+        <div class="row sensitive"><span class="k">Supplier</span><span class="v">Halden &amp; Roe Ltd</span></div>
+        <div class="row kept"><span class="k">Invoice&nbsp;no</span><span class="v">INV-99204</span></div>
+        <div class="row sensitive"><span class="k">Total</span><span class="v">£18,420.00</span></div>
+        <div class="row sensitive"><span class="k">IBAN</span><span class="v">GB29 NWBK 6016</span></div>
+        <div class="row kept"><span class="k">Due&nbsp;date</span><span class="v">30 Jun 2026</span></div>
+        <div class="doc-foot">
+          <span>structure preserved</span>
+          <span class="ok">● re-id check passed</span>
+        </div>
+      </div>
+      <div class="caption-pill">real → twin · <b>keep the shape, replace the secrets</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROBLEM ===================== -->
+<section class="problem" id="problem">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="reveal">AI breaks on<br>the ugly ones.</h2>
+      <span class="sec-no reveal" data-d="1">/ 01 — the failure surface</span>
+    </div>
+
+    <div class="litany reveal" data-d="1">
+      <div class="lit"><span class="n">01</span><div class="t">The blurry scan</div><div class="d">Photographed at an angle, half a stamp over the total.</div></div>
+      <div class="lit"><span class="n">02</span><div class="t">The missing PO</div><div class="d">No purchase order to match against. Now what?</div></div>
+      <div class="lit"><span class="n">03</span><div class="t">The duplicate</div><div class="d">Same invoice, second time — and it's already been paid.</div></div>
+      <div class="lit"><span class="n">04</span><div class="t">The renamed supplier</div><div class="d">Same company, slightly different name since last quarter.</div></div>
+      <div class="lit"><span class="n">05</span><div class="t">The off VAT</div><div class="d">A tax line that's almost right. Almost.</div></div>
+      <div class="lit"><span class="n">06</span><div class="t">Two totals, one page</div><div class="d">Gross and net, and a due date hiding in the footer.</div></div>
+    </div>
+
+    <p class="problem-tail reveal" data-d="2">
+      Demos never show you these. <span class="hl">Your Tuesday is made of them.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ===================== PROOF ===================== -->
+<section class="proof">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="reveal">Caution isn't fear.<br>It's <em>arithmetic.</em></h2>
+      <span class="sec-no reveal" data-d="1">/ 02 — the evidence</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat reveal" data-d="1">
+        <div class="num"><span class="count" data-to="95">0</span><span class="u">%</span></div>
+        <div class="lbl">of enterprise GenAI pilots show no measurable P&amp;L impact.</div>
+        <div class="src">MIT NANDA · 2025</div>
+      </div>
+      <div class="stat reveal" data-d="2">
+        <div class="num"><span class="count" data-to="40">0</span><span class="u">%+</span></div>
+        <div class="lbl">of agentic-AI projects are forecast to be scrapped by 2027.</div>
+        <div class="src">Gartner</div>
+      </div>
+      <div class="stat reveal" data-d="3">
+        <div class="num"><span class="count" data-to="78">0</span><span class="u">%</span></div>
+        <div class="lbl">of CFOs report serious AI security and privacy concerns.</div>
+        <div class="src">Kyriba · 2025</div>
+      </div>
+    </div>
+
+    <p class="proof-tail reveal" data-d="2">
+      Trying AI was never the hard part. <b>Proving it works — before it reaches the ledger — is.</b>
+    </p>
+  </div>
+</section>
+
+<!-- ===================== HOW IT WORKS ===================== -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="reveal">The best test data<br>there is. <em>Yours.</em><br>Without the risk.</h2>
+      <span class="sec-no reveal" data-d="1">/ 03 — the mechanism</span>
+    </div>
+
+    <p class="how-lead reveal" data-d="1">
+      Your real files never leave your environment. Garantir builds a <b>twin</b> of them — locally.
+      The twin keeps everything the AI reacts to: <span class="sig">layout, totals, dates, PO numbers, supplier patterns, duplicates, scanned pages, edge cases.</span>
+      The sensitive details — names, account numbers, real amounts — are replaced.
+    </p>
+
+    <div class="flow reveal" data-d="2">
+      <div class="flow-node">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><path d="M9 13h6M9 17h6"/></svg></div>
+        <div class="step">Step 01</div>
+        <div class="nm">Real files</div>
+        <div class="ds">Your historical invoices and the human answer key. Read-only. They stay home.</div>
+      </div>
+      <div class="flow-arrow"><div class="track"></div></div>
+      <div class="flow-node mid">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="9" height="16" rx="1"/><rect x="12" y="4" width="9" height="16" rx="1"/><path d="M12 9h3M12 13h3"/></svg></div>
+        <div class="step">Step 02</div>
+        <div class="nm">Local twin</div>
+        <div class="ds">Structure preserved, secrets replaced — then a re-identification check before anything moves.</div>
+      </div>
+      <div class="flow-arrow"><div class="track"></div></div>
+      <div class="flow-node">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7L10 17l-5-5"/></svg></div>
+        <div class="step">Step 03</div>
+        <div class="nm">Safe test</div>
+        <div class="ds">The vendor's AI runs the twin. Garantir grades every field against the twinned answer key.</div>
+      </div>
+    </div>
+
+    <div class="trust-line reveal" data-d="3">
+      <span class="lk">▸ Provably local.</span> Every byte that crosses the line is logged, hashed, and tamper-evident — so "your data stays home" is a fact, not a promise.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHAT GETS TESTED ===================== -->
+<section class="tested" id="tested">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="reveal">We ask the questions<br>a demo <em>won't.</em></h2>
+      <span class="sec-no reveal" data-d="1">/ 04 — the test</span>
+    </div>
+
+    <div class="checks reveal" data-d="1">
+      <div class="chk"><span class="mark"><svg viewBox="0 0 24 24"><path d="M20 7L10 17l-5-5"/></svg></span><div class="q">Can it read the invoice — even the bad scan?</div></div>
+      <div class="chk"><span class="mark"><svg viewBox="0 0 24 24"><path d="M20 7L10 17l-5-5"/></svg></span><div class="q">Does it pull the right total?</div></div>
+      <div class="chk"><span class="mark"><svg viewBox="0 0 24 24"><path d="M20 7L10 17l-5-5"/></svg></span><div class="q">Does it match the purchase order?</div></div>
+      <div class="chk"><span class="mark"><svg viewBox="0 0 24 24"><path d="M20 7L10 17l-5-5"/></svg></span><div class="q">Does it catch the duplicate that's already paid?</div></div>
+      <div class="chk"><span class="mark"><svg viewBox="0 0 24 24"><path d="M20 7L10 17l-5-5"/></svg></span><div class="q">Does it flag the exception instead of guessing?</div></div>
+      <div class="chk crit"><span class="mark"><svg viewBox="0 0 24 24"><path d="M20 7L10 17l-5-5"/></svg></span><div class="q">And the one that matters most: <b>does it know when it doesn't know?</b></div></div>
+    </div>
+  </div>
+
+  <!-- climax -->
+  <div class="climax" id="climax">
+    <div class="wrap">
+      <div class="pre reveal">In finance, the dangerous answer was never</div>
+      <div class="big reveal" data-d="1">“I don't know.”</div>
+      <div class="reveal" data-d="2" style="margin-top:30px">
+        <div class="pre">It's</div>
+        <div class="wrong-wrap">
+          <div class="wrong">“I'm certain.”</div>
+        </div>
+        <div class="big" style="font-size:clamp(34px,6vw,72px);margin-top:4px">And&nbsp;<span style="color:var(--red)">wrong.</span>
+          <span class="stamp">✕ confident&nbsp;error</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== VERDICT ===================== -->
+<section class="verdict" id="verdict">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="reveal">No hype.<br>A <em>verdict.</em></h2>
+      <span class="sec-no reveal" data-d="1">/ 05 — the decision</span>
+    </div>
+
+    <p class="verdict-lead reveal" data-d="1">
+      One decision-grade answer your CFO, compliance, IT, and auditors can all act on — backed by what was tested, what was protected, and how confident the test is that it predicts production.
+    </p>
+
+    <div class="vgrid">
+      <div class="vcard go reveal" data-d="1"><span class="vdot"></span><div class="vno">Verdict A</div><div class="vt">Deploy</div><div class="vd">It earns the ledger. Turn it on.</div></div>
+      <div class="vcard lim reveal" data-d="2"><span class="vdot"></span><div class="vno">Verdict B</div><div class="vt">Deploy with limits</div><div class="vd">Cleared — within defined guardrails.</div></div>
+      <div class="vcard hum reveal" data-d="3"><span class="vdot"></span><div class="vno">Verdict C</div><div class="vt">Keep a human</div><div class="vd">Not yet autonomous. Keep review on.</div></div>
+      <div class="vcard no reveal" data-d="4"><span class="vdot"></span><div class="vno">Verdict D</div><div class="vt">Don't deploy</div><div class="vd">It isn't ready. Here's exactly why.</div></div>
+    </div>
+
+    <p class="verdict-tail reveal" data-d="2">
+      Garantir turns <span class="hl">“should we trust this AI?”</span> into a decision you can defend.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== FINAL CTA ===================== -->
+<section class="final" id="cta">
+  <div class="wrap">
+    <div class="inner">
+      <span class="eyebrow reveal" style="justify-content:center">Before go-live</span>
+      <h2 class="reveal" data-d="1">Prove it before<br>it touches <em>real money.</em></h2>
+      <div class="pipe reveal" data-d="2">
+        <span>Your data</span><span>twinned locally</span><span>tested on your edge cases</span><span>graded independently</span>
+      </div>
+      <div class="reveal" data-d="3">
+        <a href="#" class="btn btn-primary" style="padding:17px 30px;font-size:14px">Get the Garantir verdict <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <div class="foot-brand"><span class="dot"></span>Garantir</div>
+      <p class="foot-tag">The independent proving ground between “interested in an AI automation” and “approved to deploy it.”</p>
+    </div>
+    <div class="foot-note">
+      Independent · provably local · finance-specific<br>
+      Functional-correctness validation, not AI security.<br>
+      The failure mode we catch is wrong numbers in the ledger.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // nav scroll state
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        // stat counters
+        e.target.querySelectorAll && e.target.querySelectorAll('.count').forEach(runCount);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.18, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // climax band gets its own observer to trigger the stamp class
+  const climax = document.getElementById('climax');
+  const io2 = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io2.unobserve(e.target);} });
+  },{threshold:0.35});
+  io2.observe(climax);
+
+  // number count-up
+  function runCount(node){
+    if(node.dataset.done) return;
+    node.dataset.done = '1';
+    const to = parseInt(node.dataset.to,10);
+    const dur = 1200; const start = performance.now();
+    const ease = t => 1 - Math.pow(1-t, 3);
+    function tick(now){
+      const p = Math.min((now-start)/dur, 1);
+      node.textContent = Math.round(ease(p)*to);
+      if(p<1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+</script>
+</body>
+</html>
