@@ -6,6 +6,7 @@ import { Header } from "@/components/ui/header-1";
 import { HeroSection } from "@/components/ui/glass-video-hero";
 import { TrustedBy } from "@/components/ui/trusted-by";
 import { GarantirFooter } from "@/components/ui/flickering-footer";
+import { PixelTrail } from "@/components/ui/pixel-trail";
 
 export default function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -42,18 +43,26 @@ const openModal = useCallback(() => setModalOpen(true), []);
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1 }} aria-hidden="true">
           <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[calc(100%-20rem)] border-x border-dashed border-[rgba(14,13,11,0.25)]" />
         </div>
+        {/* Pixel trail — left margin */}
+        <div className="absolute top-0 left-0 h-full pointer-events-auto overflow-hidden" style={{ width: '10rem', zIndex: 10 }}>
+          <PixelTrail pixelSize={16} fadeDuration={800} delay={0} pixelClassName="rounded-full bg-[#5d7e10] opacity-40" />
+        </div>
+        {/* Pixel trail — right margin */}
+        <div className="absolute top-0 right-0 h-full pointer-events-auto overflow-hidden" style={{ width: '10rem', zIndex: 10 }}>
+          <PixelTrail pixelSize={16} fadeDuration={800} delay={0} pixelClassName="rounded-full bg-[#5d7e10] opacity-40" />
+        </div>
         {/* SECTION 1 */}
         <section style={{ padding: '96px 0' }}>
           <div className="w-[calc(100%-20rem)] mx-auto px-16" style={{ minHeight: 400 }} />
         </section>
 
         {/* SECTION 2 */}
-        <section style={{ padding: '96px 0', borderTop: '1px solid rgba(14,13,11,0.12)' }}>
+        <section style={{ padding: '96px 0', borderTop: '1px dashed rgba(14,13,11,0.25)' }}>
           <div className="w-[calc(100%-20rem)] mx-auto px-16" style={{ minHeight: 400 }} />
         </section>
 
         {/* SECTION 3 */}
-        <section style={{ padding: '96px 0', borderTop: '1px solid rgba(14,13,11,0.12)' }}>
+        <section style={{ padding: '96px 0', borderTop: '1px dashed rgba(14,13,11,0.25)' }}>
           <div className="w-[calc(100%-20rem)] mx-auto px-16" style={{ minHeight: 400 }} />
         </section>
         </div>

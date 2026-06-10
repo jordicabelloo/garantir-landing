@@ -234,7 +234,7 @@ export function GarantirFooter() {
               width={0}
               height={0}
               sizes="100vw"
-              style={{ height: '150px', width: 'auto', pointerEvents: 'none', filter: 'brightness(0)' }}
+              style={{ height: '60px', width: 'auto', maxWidth: '100%', pointerEvents: 'none', filter: 'brightness(0)' }}
               draggable={false}
               priority
             />
