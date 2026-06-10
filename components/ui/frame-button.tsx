@@ -159,19 +159,19 @@ export function FrameMarkers({ className, size = 20, offset = 7.5, hoverOffset =
   return (
     <>
       <ChevronUpLeft
-        style={{ ...styleBase, top: offsetPx, left: offsetPx, "--move-x": negMovePx, "--move-y": negMovePx } as React.CSSProperties}
+        style={{ ...styleBase, top: offsetPx, left: offsetPx, "--move-x": negMovePx, "--move-y": negMovePx } as unknown as React.CSSProperties}
         className={cn(baseStyles, "group-hover:[transform:translate(var(--move-x),var(--move-y))]")}
       />
       <ChevronUpRight
-        style={{ ...styleBase, top: offsetPx, right: offsetPx, "--move-x": movePx, "--move-y": negMovePx } as React.CSSProperties}
+        style={{ ...styleBase, top: offsetPx, right: offsetPx, "--move-x": movePx, "--move-y": negMovePx } as unknown as React.CSSProperties}
         className={cn(baseStyles, "group-hover:[transform:translate(var(--move-x),var(--move-y))]")}
       />
       <ChevronDownRight
-        style={{ ...styleBase, bottom: offsetPx, right: offsetPx, "--move-x": movePx, "--move-y": movePx } as React.CSSProperties}
+        style={{ ...styleBase, bottom: offsetPx, right: offsetPx, "--move-x": movePx, "--move-y": movePx } as unknown as React.CSSProperties}
         className={cn(baseStyles, "group-hover:[transform:translate(var(--move-x),var(--move-y))]")}
       />
       <ChevronDownLeft
-        style={{ ...styleBase, bottom: offsetPx, left: offsetPx, "--move-x": negMovePx, "--move-y": movePx } as React.CSSProperties}
+        style={{ ...styleBase, bottom: offsetPx, left: offsetPx, "--move-x": negMovePx, "--move-y": movePx } as unknown as React.CSSProperties}
         className={cn(baseStyles, "group-hover:[transform:translate(var(--move-x),var(--move-y))]")}
       />
     </>
