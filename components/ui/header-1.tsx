@@ -126,7 +126,7 @@ function GarantirMark() {
             width={0}
             height={0}
             sizes="100vw"
-            style={{ height: '100px', width: 'auto', pointerEvents: 'none' }}
+            style={{ height: '36px', width: 'auto', pointerEvents: 'none' }}
             draggable={false}
             priority
         />
