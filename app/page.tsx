@@ -2,20 +2,15 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import WaitlistModal from "@/components/WaitlistModal";
+import { Header } from "@/components/ui/header-1";
+import { HeroSection } from "@/components/ui/glass-video-hero";
+import { TrustedBy } from "@/components/ui/trusted-by";
+import { GarantirFooter } from "@/components/ui/flickering-footer";
 
 export default function LandingPage() {
-  const [scrolled, setScrolled] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const climaxRef = useRef<HTMLDivElement>(null);
   const [climaxIn, setClimaxIn] = useState(false);
-
-  // Nav scroll state
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   // Reveal on scroll
   useEffect(() => {
@@ -59,81 +54,9 @@ export default function LandingPage() {
 
   return (
     <>
-        {/* NAV */}
-        <nav id="nav" className={scrolled ? "scrolled" : ""}>
-          <span className="brand" onClick={() => scrollTo("top")}>
-            <span className="dot" />Garantir
-          </span>
-          <div className="nav-links">
-            <a onClick={() => scrollTo("problem")}>The problem</a>
-            <a onClick={() => scrollTo("how")}>How it works</a>
-            <a onClick={() => scrollTo("tested")}>What we test</a>
-            <a className="nav-cta" onClick={openModal}>Get the verdict</a>
-          </div>
-        </nav>
-
-        {/* HERO */}
-        <section className="hero" id="top">
-          <div className="wrap hero-grid">
-            <div>
-              <span className="eyebrow reveal">Pre-deployment validation · finance &amp; regulated teams</span>
-              <h1 className="reveal" data-d="1">
-                Test it on<br />the files that<br /><em>scare</em> you.
-              </h1>
-              <p className="deck reveal" data-d="2">
-                Not demo data. Not fake invoices. Not the perfect files built for a sales call.
-                Garantir proves whether a finance AI works on <b>your</b> edge cases — before it ever touches real money.
-              </p>
-              <div className="hero-cta reveal" data-d="3">
-                <button className="btn btn-primary" onClick={openModal}>
-                  Get the Garantir verdict <span className="arr">→</span>
-                </button>
-                <button className="btn btn-ghost" onClick={() => scrollTo("tested")}>
-                  See what we test
-                </button>
-              </div>
-              <div className="hero-meta reveal" data-d="4">
-                <span>Real data never leaves</span>
-                <span>Graded independently</span>
-                <span>One verdict, whole committee</span>
-              </div>
-            </div>
-
-            {/* twinning visual */}
-            <div className="twin-stage reveal" data-d="3">
-              <div className="doc real">
-                <span className="doc-tag">Your file · sealed</span>
-                <div className="doc-head">
-                  <div className="ti">Invoice</div>
-                  <div className="sub">AP-0481</div>
-                </div>
-                <div className="row sensitive"><span className="k">Supplier</span><span className="v">Halden &amp; Roe Ltd</span></div>
-                <div className="row"><span className="k">Invoice&nbsp;no</span><span className="v">INV-99204</span></div>
-                <div className="row sensitive"><span className="k">Total</span><span className="v">£18,420.00</span></div>
-                <div className="row sensitive"><span className="k">IBAN</span><span className="v">GB29 NWBK 6016</span></div>
-                <div className="row"><span className="k">Due&nbsp;date</span><span className="v">30 Jun 2026</span></div>
-              </div>
-
-              <div className="doc twin ticked">
-                <span className="doc-tag">Local twin</span>
-                <div className="doc-head">
-                  <div className="ti">Invoice</div>
-                  <div className="sub">AP-0481</div>
-                </div>
-                <div className="row sensitive"><span className="k">Supplier</span><span className="v">Halden &amp; Roe Ltd</span></div>
-                <div className="row kept"><span className="k">Invoice&nbsp;no</span><span className="v">INV-99204</span></div>
-                <div className="row sensitive"><span className="k">Total</span><span className="v">£18,420.00</span></div>
-                <div className="row sensitive"><span className="k">IBAN</span><span className="v">GB29 NWBK 6016</span></div>
-                <div className="row kept"><span className="k">Due&nbsp;date</span><span className="v">30 Jun 2026</span></div>
-                <div className="doc-foot">
-                  <span>structure preserved</span>
-                  <span className="ok">● re-id check passed</span>
-                </div>
-              </div>
-              <div className="caption-pill">real → twin · <b>keep the shape, replace the secrets</b></div>
-            </div>
-          </div>
-        </section>
+        <Header onCTA={openModal} />
+        <HeroSection onCTA={openModal} />
+        <TrustedBy />
 
         {/* PROBLEM */}
         <section className="problem" id="problem">
@@ -326,19 +249,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <footer>
-          <div className="wrap foot-grid">
-            <div>
-              <div className="foot-brand"><span className="dot" />Garantir</div>
-              <p className="foot-tag">The independent proving ground between &ldquo;interested in an AI automation&rdquo; and &ldquo;approved to deploy it.&rdquo;</p>
-            </div>
-            <div className="foot-note">
-              Independent · provably local · finance-specific<br />
-              Functional-correctness validation, not AI security.<br />
-              The failure mode we catch is wrong numbers in the ledger.
-            </div>
-          </div>
-        </footer>
+        <GarantirFooter />
 
         <WaitlistModal open={modalOpen} onClose={closeModal} />
       </>
