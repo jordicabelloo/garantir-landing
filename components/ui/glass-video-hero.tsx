@@ -23,35 +23,35 @@ export const HeroSection = ({ onCTA }: HeroSectionProps) => {
       className="relative flex flex-col bg-background overflow-hidden"
       style={{ height: "calc(100vh - 3.5rem)" }}
     >
-      {/* Grid lines — z-[55] sits above header (z-50) so verticals cut through nav */}
-      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 55 }} aria-hidden="true">
-        <div className="absolute top-14 left-0 right-0 border-t border-dashed border-[rgba(236,230,216,0.3)]" />
+      {/* Grid lines */}
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 55 }} aria-hidden="true">
         <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[calc(100%-20rem)] border-x border-dashed border-[rgba(236,230,216,0.3)]" />
       </div>
 
-      {/* Dithering shader background */}
-      <DitheringShader
-        width={dims.w}
-        height={dims.h}
-        shape="wave"
-        type="8x8"
-        colorBack="#0e0d0b"
-        colorFront="#3d6010"
-        pxSize={3}
-        speed={0.35}
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          width: "100%",
-          height: "100%",
-        }}
-      />
-
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-[rgba(14,13,11,0.55)]" />
+      {/* Dithering shader — constrained to inner column only */}
+      <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[calc(100%-20rem)] overflow-hidden">
+        <DitheringShader
+          width={dims.w}
+          height={dims.h}
+          shape="wave"
+          type="8x8"
+          colorBack="#0e0d0b"
+          colorFront="#3d6010"
+          pxSize={3}
+          speed={0.35}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: "100%",
+            height: "100%",
+          }}
+        />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-[rgba(14,13,11,0.55)]" />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 flex-1 flex flex-col justify-end pb-14">
