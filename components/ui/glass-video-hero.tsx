@@ -14,8 +14,8 @@ export const HeroSection = ({ onCTA }: HeroSectionProps) => {
 
       {/* Grid lines — z-[55] sits above header (z-50) so verticals cut through nav */}
       <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 55 }} aria-hidden="true">
-        <div className="absolute top-14 left-0 right-0 border-t border-dashed border-[rgba(236,230,216,0.13)]" />
-        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[calc(100%-20rem)] border-x border-dashed border-[rgba(236,230,216,0.13)]" />
+        <div className="absolute top-14 left-0 right-0 border-t border-dashed border-[rgba(236,230,216,0.3)]" />
+        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[calc(100%-20rem)] border-x border-dashed border-[rgba(236,230,216,0.3)]" />
       </div>
 
       {/* Video */}

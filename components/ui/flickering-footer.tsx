@@ -217,8 +217,12 @@ const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 
 export function GarantirFooter() {
   return (
-    <footer id="footer" className="w-full pb-0 bg-background border-t border-dashed border-[rgba(236,230,216,0.13)]">
-      <div className="flex flex-col md:flex-row md:items-start md:justify-between px-10 pt-12 pb-8"
+    <footer id="footer" className="relative w-full pb-0 border-t border-dashed border-[rgba(14,13,11,0.25)]" style={{ background: '#f2ece0', color: '#0e0d0b' }}>
+      {/* Vertical dashed lines — same column as the rest of the page */}
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }} aria-hidden="true">
+        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[calc(100%-20rem)] border-x border-dashed border-[rgba(14,13,11,0.25)]" />
+      </div>
+      <div className="relative flex flex-col md:flex-row md:items-start md:justify-between px-10 pt-12 pb-8"
         style={{ paddingLeft: 'calc(10rem + 4rem)', paddingRight: 'calc(10rem + 4rem)' }}
       >
         {/* Brand column */}
@@ -230,15 +234,15 @@ export function GarantirFooter() {
               width={0}
               height={0}
               sizes="100vw"
-              style={{ height: '150px', width: 'auto', pointerEvents: 'none' }}
+              style={{ height: '150px', width: 'auto', pointerEvents: 'none', filter: 'brightness(0)' }}
               draggable={false}
               priority
             />
           </Link>
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="text-sm text-[rgba(14,13,11,0.5)] leading-relaxed">
             The independent proving ground between &ldquo;interested in AI automation&rdquo; and &ldquo;approved to deploy it.&rdquo;
           </p>
-          <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-muted-foreground">
+          <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-[rgba(14,13,11,0.5)]">
             Independent · provably local · finance-specific
           </p>
         </div>
@@ -247,15 +251,15 @@ export function GarantirFooter() {
         <div className="flex gap-x-16">
           {footerLinks.map((column, idx) => (
             <ul key={idx} className="flex flex-col gap-y-2.5">
-              <li className="mb-1 font-mono text-[10px] font-semibold tracking-[0.18em] uppercase text-muted-foreground">
+              <li className="mb-1 font-mono text-[10px] font-semibold tracking-[0.18em] uppercase text-[rgba(14,13,11,0.5)]">
                 {column.title}
               </li>
               {column.links.map((link) => (
                 <li key={link.id}
-                  className="group inline-flex cursor-pointer items-center gap-1 text-sm text-[rgba(236,230,216,0.5)] hover:text-foreground transition-colors"
+                  className="group inline-flex cursor-pointer items-center gap-1 text-sm text-[rgba(14,13,11,0.45)] hover:text-[#0e0d0b] transition-colors"
                 >
                   <Link href={link.url}>{link.title}</Link>
-                  <div className="flex size-3.5 items-center justify-center border border-[rgba(236,230,216,0.15)] rounded translate-x-0 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100">
+                  <div className="flex size-3.5 items-center justify-center border border-[rgba(14,13,11,0.15)] rounded translate-x-0 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100">
                     <ChevronRightIcon className="h-2.5 w-2.5" />
                   </div>
                 </li>
@@ -266,8 +270,8 @@ export function GarantirFooter() {
       </div>
 
       {/* Flickering grid */}
-      <div className="w-full h-40 md:h-56 relative mt-6 z-0">
-        <div className="absolute inset-0 bg-gradient-to-t from-transparent to-background z-10 from-40%" />
+      <div className="w-full h-40 md:h-56 relative mt-6" style={{ zIndex: 1 }}>
+        <div className="absolute inset-0 bg-gradient-to-t from-transparent to-[#f2ece0] z-10 from-10%" />
         <div className="absolute inset-0 w-[calc(100%-20rem)] mx-auto">
           <FlickeringGrid
             text="Protect your data"
@@ -276,8 +280,8 @@ export function GarantirFooter() {
             className="h-full w-full"
             squareSize={2}
             gridGap={3}
-            color="#cbf24e"
-            maxOpacity={0.18}
+            color="#5d7e10"
+            maxOpacity={0.55}
             flickerChance={0.08}
           />
         </div>

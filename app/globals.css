@@ -39,8 +39,8 @@
   --signal-deep: #a9cf2c;
   --amber: #efb14a;
   --red: #e2573e;
-  --line: rgba(236,230,216,0.13);
-  --line-soft: rgba(236,230,216,0.07);
+  --line: rgba(236,230,216,0.28);
+  --line-soft: rgba(236,230,216,0.13);
   --serif: "Fraunces", Georgia, serif;
   --sans: "Hanken Grotesk", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, monospace;
@@ -410,6 +410,23 @@ footer { border-top: 1px solid var(--line); padding: 46px 0 56px; }
 .ticked::before, .ticked::after { content: ""; position: absolute; width: 9px; height: 9px; border-color: var(--bone-faint); opacity: .5; }
 .ticked::before { top: -1px; left: -1px; border-top: 1px solid; border-left: 1px solid; }
 .ticked::after { bottom: -1px; right: -1px; border-bottom: 1px solid; border-right: 1px solid; }
+
+/* ─── LIGHT BAND ─── */
+.light-band {
+  --ink: #f2ece0;
+  --ink-2: #e8e1cf;
+  --ink-3: #ddd5c1;
+  --bone: #0e0d0b;
+  --bone-dim: #3a3630;
+  --bone-faint: #706860;
+  --line: rgba(14,13,11,0.22);
+  --line-soft: rgba(14,13,11,0.1);
+  --signal: #5d7e10;
+  --signal-deep: #4c6b0c;
+  --amber: #b87309;
+  background: var(--ink);
+  color: var(--bone);
+}
 
 /* WAITLIST MODAL */
 .modal-overlay {

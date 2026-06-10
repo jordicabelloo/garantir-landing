@@ -19,7 +19,7 @@ const companies = [
 
 export function TrustedBy() {
   return (
-    <div className='w-full border-y border-dashed border-[rgba(236,230,216,0.13)] bg-background'>
+    <div className='w-full border-y border-dashed border-[rgba(236,230,216,0.3)] bg-background'>
       <div className='flex h-[68px] items-stretch'>
 
         {/* Left spacer — matches column margin (10rem) */}
