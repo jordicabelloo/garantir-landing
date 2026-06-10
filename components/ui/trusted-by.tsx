@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { InfiniteSlider } from '@/components/ui/infinite-slider';
 import { ProgressiveBlur } from '@/components/ui/progressive-blur';
+import { CrossMarker } from '@/components/ui/cross-marker';
 
 const baseLogos = [
   { src: '/blackrock-logo-1.svg',       alt: 'BlackRock' },
@@ -15,7 +16,10 @@ const logos = [...baseLogos, ...baseLogos, ...baseLogos, ...baseLogos, ...baseLo
 
 export function TrustedBy() {
   return (
-    <div className='w-full border-y border-dashed border-[rgba(236,230,216,0.3)] bg-background'>
+    <div className='relative w-full border-y border-dashed border-[rgba(236,230,216,0.3)] bg-background'>
+      {/* Top border crosses */}
+      <div style={{ position: 'absolute', top: 0, left: '10rem', transform: 'translate(-50%, -50%)', zIndex: 6 }}><CrossMarker /></div>
+      <div style={{ position: 'absolute', top: 0, right: '10rem', transform: 'translate(50%, -50%)', zIndex: 6 }}><CrossMarker /></div>
       <div className='flex h-[68px] items-stretch'>
 
         {/* Left spacer — matches column margin (10rem) */}
