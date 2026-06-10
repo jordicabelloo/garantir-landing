@@ -34,18 +34,29 @@ export function Header({ onCTA }: HeaderProps) {
 
     return (
         <header className="sticky top-0 z-50 w-full bg-background border-b border-[rgba(236,230,216,0.1)]">
-            <nav className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4">
-                <div className="hover:bg-accent rounded-md p-2">
-                    <GarantirMark />
+            <nav className="flex h-14 w-full items-center" style={{ paddingLeft: 'calc(10rem + 2.5rem)', paddingRight: 'calc(10rem + 2.5rem)' }}>
+                {/* Logo — left */}
+                <div className="flex-1 flex items-center">
+                    <div className="hover:bg-accent rounded-md p-2">
+                        <GarantirMark />
+                    </div>
                 </div>
-                <div className="hidden items-center gap-2 md:flex">
+
+                {/* Links — center */}
+                <div className="hidden items-center gap-1 md:flex">
                     {links.map((link) => (
                         <a key={link.label} className={buttonVariants({ variant: 'ghost' })} href={link.href}>
                             {link.label}
                         </a>
                     ))}
+                </div>
+
+                {/* CTA — right */}
+                <div className="flex-1 hidden md:flex justify-end">
                     <Button variant="outline" onClick={onCTA}>Get the verdict</Button>
                 </div>
+
+                {/* Mobile toggle */}
                 <Button
                     size="icon"
                     variant="outline"
@@ -126,7 +137,7 @@ function GarantirMark() {
             width={0}
             height={0}
             sizes="100vw"
-            style={{ height: '36px', width: 'auto', pointerEvents: 'none' }}
+            style={{ height: '28px', width: 'auto', pointerEvents: 'none' }}
             draggable={false}
             priority
         />

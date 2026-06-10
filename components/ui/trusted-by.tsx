@@ -26,8 +26,8 @@ export function TrustedBy() {
         <div className='shrink-0 w-40' />
 
         {/* Label — no right border */}
-        <div className='flex shrink-0 items-center pr-8'>
-          <span className='font-mono text-[10px] font-medium tracking-[0.2em] uppercase text-muted-foreground whitespace-nowrap'>
+        <div className='flex shrink-0 items-center pl-10 pr-8'>
+          <span className='font-mono text-[12px] font-medium tracking-[0.2em] uppercase text-[rgba(236,230,216,0.55)] whitespace-nowrap'>
             Trusted by
           </span>
         </div>
