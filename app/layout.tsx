@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Garantir — the pre-deployment verdict for finance AI",
+  title: "Garantir MVP",
   description:
     "Prove whether a finance AI works on your edge cases before it ever touches real money. Independent, provably local, decision-grade.",
   openGraph: {
@@ -21,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
