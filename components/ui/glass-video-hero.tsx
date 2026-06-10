@@ -23,8 +23,8 @@ export const HeroSection = ({ onCTA }: HeroSectionProps) => {
       className="relative flex flex-col bg-background overflow-hidden"
       style={{ height: "calc(100vh - 3.5rem)" }}
     >
-      {/* Grid lines */}
-      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 55 }} aria-hidden="true">
+      {/* Grid lines — fixed so they cross the navbar and run full viewport height */}
+      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 55 }} aria-hidden="true">
         <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[calc(100%-20rem)] border-x border-dashed border-[rgba(236,230,216,0.3)]" />
       </div>
 
