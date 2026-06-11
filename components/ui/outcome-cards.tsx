@@ -43,6 +43,15 @@ function ShimmerStat({
   );
 }
 
+// Shared classes: all cards start muted (grayscale + overlay), become bright on hover
+const MUTED = cn(
+  "grayscale hover:grayscale-0",
+  "before:absolute before:w-full before:h-full before:content-[''] before:left-0 before:top-0",
+  "before:rounded-xl before:bg-[#f2ece0]/55 before:transition-opacity before:duration-500",
+  "hover:before:opacity-0",
+  "transition-all duration-500"
+);
+
 const CARDS = [
   {
     icon: <Clock className="size-3.5 text-[rgba(14,13,11,0.5)]" />,
@@ -50,15 +59,7 @@ const CARDS = [
     description: "Full validation run, start to finish",
     date: "speed",
     delay: 0,
-    className: cn(
-      "[grid-area:stack]",
-      "hover:-translate-y-10",
-      "before:absolute before:w-full before:h-full before:content-[''] before:left-0 before:top-0",
-      "before:rounded-xl before:bg-[#f2ece0]/60 before:transition-opacity before:duration-500",
-      "hover:before:opacity-0",
-      "grayscale hover:grayscale-0",
-      "transition-all duration-500"
-    ),
+    className: cn("[grid-area:stack]", "hover:-translate-y-10", MUTED),
   },
   {
     icon: <BarChart2 className="size-3.5 text-[rgba(14,13,11,0.5)]" />,
@@ -66,16 +67,7 @@ const CARDS = [
     description: "Your documents tested, not vendor samples",
     date: "coverage",
     delay: 0.6,
-    className: cn(
-      "[grid-area:stack]",
-      "translate-x-16 translate-y-10",
-      "hover:-translate-y-1",
-      "before:absolute before:w-full before:h-full before:content-[''] before:left-0 before:top-0",
-      "before:rounded-xl before:bg-[#f2ece0]/60 before:transition-opacity before:duration-500",
-      "hover:before:opacity-0",
-      "grayscale hover:grayscale-0",
-      "transition-all duration-500"
-    ),
+    className: cn("[grid-area:stack]", "translate-x-16 translate-y-10", "hover:-translate-y-1", MUTED),
   },
   {
     icon: <ShieldOff className="size-3.5 text-[rgba(14,13,11,0.5)]" />,
@@ -83,12 +75,7 @@ const CARDS = [
     description: "Sensitive data transmitted to the AI vendor",
     date: "privacy",
     delay: 1.2,
-    className: cn(
-      "[grid-area:stack]",
-      "translate-x-32 translate-y-20",
-      "hover:translate-y-10",
-      "transition-all duration-500"
-    ),
+    className: cn("[grid-area:stack]", "translate-x-32 translate-y-20", "hover:translate-y-10", MUTED),
   },
   {
     icon: <FileCheck className="size-3.5 text-[rgba(14,13,11,0.5)]" />,
@@ -96,12 +83,7 @@ const CARDS = [
     description: "Evidence Pack per run, ready for audit",
     date: "output",
     delay: 1.8,
-    className: cn(
-      "[grid-area:stack]",
-      "translate-x-48 translate-y-[7.5rem]",
-      "hover:translate-y-[5rem]",
-      "transition-all duration-500"
-    ),
+    className: cn("[grid-area:stack]", "translate-x-48 translate-y-[7.5rem]", "hover:translate-y-[5rem]", MUTED),
   },
 ];
 
@@ -129,7 +111,7 @@ export function OutcomeCards() {
             </div>
 
             {/* Description */}
-            <p className="whitespace-nowrap font-sans text-sm text-[rgba(14,13,11,0.65)]">
+            <p className="font-sans text-sm text-[rgba(14,13,11,0.65)]">
               {card.description}
             </p>
 
