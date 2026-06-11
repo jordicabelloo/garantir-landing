@@ -50,7 +50,7 @@ export const HeroSection = ({ onCTA }: HeroSectionProps) => {
           }}
         />
         {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-[rgba(14,13,11,0.55)]" />
+        <div className="absolute inset-0 bg-[rgba(14,13,11,0.22)]" />
       </div>
 
       {/* Content */}

@@ -7,6 +7,11 @@ import { HeroSection } from "@/components/ui/glass-video-hero";
 import { TrustedBy } from "@/components/ui/trusted-by";
 import { GarantirFooter } from "@/components/ui/flickering-footer";
 import { PixelTrail } from "@/components/ui/pixel-trail";
+import { ValidationDemo } from "@/components/ui/validation-demo";
+import { InvoiceComparison } from "@/components/ui/invoice-comparison";
+import { GarantirFaq } from "@/components/ui/garantir-faq";
+import { BlindDeployment } from "@/components/ui/blind-deployment";
+import { RegulatedIndustries } from "@/components/ui/regulated-industries";
 
 export default function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -53,17 +58,95 @@ const openModal = useCallback(() => setModalOpen(true), []);
         </div>
         {/* SECTION 1 */}
         <section style={{ padding: '96px 0' }}>
-          <div className="w-[calc(100%-20rem)] mx-auto px-16" style={{ minHeight: 400 }} />
+          <div className="w-[calc(100%-20rem)] mx-auto px-16">
+            <h2>The blind deployment problem</h2>
+            <BlindDeployment />
+          </div>
         </section>
 
         {/* SECTION 2 */}
         <section style={{ padding: '96px 0', borderTop: '1px dashed rgba(14,13,11,0.25)' }}>
-          <div className="w-[calc(100%-20rem)] mx-auto px-16" style={{ minHeight: 400 }} />
+          <div className="w-[calc(100%-20rem)] mx-auto px-16">
+
+            {/* Title + subtitle */}
+            <h2>How it works</h2>
+            <p style={{
+              fontFamily: 'var(--sans)',
+              fontSize: 'clamp(15px, 1.3vw, 18px)',
+              color: 'rgba(14,13,11,0.58)',
+              lineHeight: 1.6,
+              marginTop: '1.25rem',
+              maxWidth: '520px',
+            }}>
+              Three automated steps. Your data never leaves your machine. At the end, a decision-grade Evidence Pack your CFO and auditors can act on.
+            </p>
+
+            {/* Block 1 — Run a validation */}
+            <div style={{ marginTop: '4rem' }}>
+              <span className="eyebrow" style={{ color: 'var(--signal)', marginBottom: '0.75rem', display: 'inline-flex' }}>
+                01 — Run a validation
+              </span>
+              <p style={{
+                fontFamily: 'var(--sans)',
+                fontSize: 13.5,
+                color: 'rgba(14,13,11,0.55)',
+                lineHeight: 1.65,
+                marginTop: '0.6rem',
+                marginBottom: '1.75rem',
+                maxWidth: '480px',
+              }}>
+                Upload your invoice folder and answer key. Garantir validates the files, creates a protected twin, and runs the AI vendor — all in one click.
+              </p>
+              <ValidationDemo />
+            </div>
+
+            {/* Block 2 — The Protected Twin */}
+            <div style={{ marginTop: '5rem' }}>
+              <span className="eyebrow" style={{ color: 'var(--signal)', display: 'inline-flex' }}>
+                02 — The Protected Twin
+              </span>
+              <p style={{
+                fontFamily: 'var(--sans)',
+                fontSize: 13.5,
+                color: 'rgba(14,13,11,0.55)',
+                lineHeight: 1.65,
+                marginTop: '0.6rem',
+                marginBottom: '1.75rem',
+                maxWidth: '480px',
+              }}>
+                Your originals are never sent to the AI vendor. Garantir substitutes them with a format-preserving encrypted twin — same structure, different values. Drag to compare what the AI sees vs. your real data.
+              </p>
+              <InvoiceComparison />
+            </div>
+
+          </div>
         </section>
 
         {/* SECTION 3 */}
         <section style={{ padding: '96px 0', borderTop: '1px dashed rgba(14,13,11,0.25)' }}>
-          <div className="w-[calc(100%-20rem)] mx-auto px-16" style={{ minHeight: 400 }} />
+          <div className="w-[calc(100%-20rem)] mx-auto px-16">
+            <h2>Built for regulated industries</h2>
+            <RegulatedIndustries />
+          </div>
+        </section>
+
+        {/* SECTION 4 */}
+        <section style={{ padding: '96px 0', borderTop: '1px dashed rgba(14,13,11,0.25)' }}>
+          <div className="w-[calc(100%-20rem)] mx-auto px-16">
+            <h2>Common questions</h2>
+            <p style={{
+              fontFamily: 'var(--sans)',
+              fontSize: 'clamp(15px, 1.3vw, 18px)',
+              color: 'rgba(14,13,11,0.58)',
+              lineHeight: 1.6,
+              marginTop: '1.25rem',
+              marginBottom: '3rem',
+              maxWidth: '480px',
+            }}>
+              What every CFO and compliance lead asks before joining the waitlist.
+            </p>
+            <GarantirFaq />
+          </div>
         </section>
         </div>
 
