@@ -5,7 +5,7 @@ const INDUSTRIES = [
     label: "Finance & Accounts Payable",
     pain: "A misread invoice can trigger a fraudulent payment, a duplicate supplier charge, or a VAT compliance breach.",
     consequence:
-      "The Finance Director is accountable — not the AI vendor. Regulators and auditors expect documented evidence that the tool was validated before it was authorised.",
+      "The Finance Director is accountable,not the AI vendor. Regulators and auditors expect documented evidence that the tool was validated before it was authorised.",
   },
   {
     label: "Insurance & Claims",
@@ -15,7 +15,7 @@ const INDUSTRIES = [
   },
   {
     label: "Legal & Contracts",
-    pain: "A missed clause or wrong date is not a bug report — it is a liability.",
+    pain: "A missed clause or wrong date is not a bug report,it is a liability.",
     consequence:
       "Legal teams evaluating AI drafting or review tools need documented evidence before any document touches a client matter. Professional indemnity depends on the process, not just the outcome.",
   },
@@ -48,7 +48,7 @@ export function RegulatedIndustries() {
         }}
       >
         In finance, insurance, and legal, a wrong AI output is not just a
-        mistake — it is a compliance event. You answer to auditors, regulators,
+        mistake,it is a compliance event. You answer to auditors, regulators,
         and clients who expect documented due diligence.{" "}
         <em>"We tested it"</em> requires proof.
       </p>
@@ -133,7 +133,7 @@ export function RegulatedIndustries() {
         >
           The Evidence Pack Garantir produces is designed for this standard. It
           is readable by your CFO, your compliance lead, and your external
-          auditors — not just your technical team.
+          auditors,not just your technical team.
         </p>
       </div>
     </div>

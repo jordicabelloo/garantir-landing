@@ -11,12 +11,12 @@ const FAQ_ITEMS = [
   {
     question: "Does our data leave our systems?",
     answer:
-      "No. Garantir creates a Protected Twin on your machine using format-preserving encryption. The AI vendor only ever sees the twin — different values, same structure. Your original invoices and financial documents are never uploaded, transmitted, or stored outside your environment.",
+      "No. Garantir creates a Protected Twin on your machine using format-preserving encryption. The AI vendor only ever sees the twin,different values, same structure. Your original invoices and financial documents are never uploaded, transmitted, or stored outside your environment.",
   },
   {
     question: "What format is the output report?",
     answer:
-      "Garantir produces a structured Evidence Pack: a PDF report with per-field accuracy scores, a grading CSV, and a JSON summary. It is designed to be readable by CFOs, compliance leads, and external auditors — not just technical teams.",
+      "Garantir produces a structured Evidence Pack: a PDF report with per-field accuracy scores, a grading CSV, and a JSON summary. It is designed to be readable by CFOs, compliance leads, and external auditors,not just technical teams.",
   },
   {
     question: "Which AI vendors can Garantir validate?",
@@ -26,7 +26,7 @@ const FAQ_ITEMS = [
   {
     question: "What types of documents does it work with?",
     answer:
-      "Garantir is built for structured financial documents — invoices, purchase orders, and AP workflows are fully supported at launch. Support for contracts and compliance forms is on the roadmap.",
+      "Garantir is built for structured financial documents,invoices, purchase orders, and AP workflows are fully supported at launch. Support for contracts and compliance forms is on the roadmap.",
   },
   {
     question: "When will Garantir be available?",

@@ -14,7 +14,7 @@ interface Step {
 
 const STEPS: Step[] = [
   { id: 1, title: "Load Invoice Data",         label: "Invoice folder + answer key validated" },
-  { id: 2, title: "Create Protected Twin",      label: "FPE transform — data never leaves your machine" },
+  { id: 2, title: "Create Protected Twin",      label: "FPE transform, data never leaves your machine" },
   { id: 3, title: "Run AI Validation",          label: "AI vendor runs on the twin, not your originals" },
 ];
 
@@ -145,7 +145,7 @@ export function ValidationDemo() {
                     transition: "color 0.3s ease",
                     lineHeight: 1.3,
                   }}>
-                    Step {step.id} — {step.title}
+                    Step {step.id}: {step.title}
                   </div>
                   <div style={{
                     fontFamily: "var(--mono)",

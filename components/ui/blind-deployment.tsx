@@ -4,12 +4,12 @@ const BEATS = [
   {
     number: "01",
     title: "The demo looks perfect.",
-    body: "Vendors test on clean, curated data. Yours has exceptions, partial scans, legacy formats, and edge cases they never designed for. The demo is not a test — it is a pitch.",
+    body: "Vendors test on clean, curated data. Yours has exceptions, partial scans, legacy formats, and edge cases they never designed for. The demo is not a test,it is a pitch.",
   },
   {
     number: "02",
     title: "There is no baseline to compare against.",
-    body: "Without a pre-deployment test on your own documents, accuracy is a number with no meaning. You do not know if 94% is safe for your workflow — or if that 6% is the category that costs you most.",
+    body: "Without a pre-deployment test on your own documents, accuracy is a number with no meaning. You do not know if 94% is safe for your workflow,or if that 6% is the category that costs you most.",
   },
   {
     number: "03",
@@ -126,7 +126,7 @@ export function BlindDeployment() {
           alignItems: "start",
         }}
       >
-        {/* Left — headline + body */}
+        {/* Left,headline + body */}
         <div>
           <span
             style={{
@@ -175,8 +175,8 @@ export function BlindDeployment() {
               marginBottom: "1rem",
             }}
           >
-            Garantir compresses a traditional vendor evaluation — weeks of data
-            preparation, legal review, and manual testing — into a single
+            Garantir compresses a traditional vendor evaluation,weeks of data
+            preparation, legal review, and manual testing,into a single
             automated run on your own documents.
           </p>
           <p
@@ -193,7 +193,7 @@ export function BlindDeployment() {
           </p>
         </div>
 
-        {/* Right — 2×2 stats grid */}
+        {/* Right,2×2 stats grid */}
         <div
           style={{
             display: "grid",
@@ -203,7 +203,7 @@ export function BlindDeployment() {
         >
           {[
             { stat: "< 4h", label: "Full validation run, start to finish" },
-            { stat: "100%", label: "Your documents tested — not vendor samples" },
+            { stat: "100%", label: "Your documents tested,not vendor samples" },
             { stat: "Zero", label: "Sensitive data transmitted to the AI vendor" },
             { stat: "1", label: "Evidence Pack per run, ready for audit" },
           ].map((item, i) => (
