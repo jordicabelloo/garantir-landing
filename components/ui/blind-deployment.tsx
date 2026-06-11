@@ -1,6 +1,7 @@
 "use client";
 
 import { GarantirFlowDiagram } from "./garantir-flow-diagram";
+import { OutcomeCards } from "./outcome-cards";
 
 export function BlindDeployment() {
   return (
@@ -101,54 +102,8 @@ export function BlindDeployment() {
           </p>
         </div>
 
-        {/* Right,2×2 stats grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            border: "1px solid rgba(14,13,11,0.14)",
-          }}
-        >
-          {[
-            { stat: "< 4h", label: "Full validation run, start to finish" },
-            { stat: "100%", label: "Your documents tested,not vendor samples" },
-            { stat: "Zero", label: "Sensitive data transmitted to the AI vendor" },
-            { stat: "1", label: "Evidence Pack per run, ready for audit" },
-          ].map((item, i) => (
-            <div
-              key={i}
-              style={{
-                padding: "2.5rem 2rem",
-                borderRight: i % 2 === 0 ? "1px solid rgba(14,13,11,0.14)" : "none",
-                borderBottom: i < 2 ? "1px solid rgba(14,13,11,0.14)" : "none",
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: "var(--serif)",
-                  fontSize: "clamp(40px, 4.5vw, 62px)",
-                  fontWeight: 500,
-                  color: "#0e0d0b",
-                  lineHeight: 1,
-                  letterSpacing: "-0.03em",
-                  marginBottom: "0.75rem",
-                }}
-              >
-                {item.stat}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--sans)",
-                  fontSize: 13.5,
-                  color: "rgba(14,13,11,0.52)",
-                  lineHeight: 1.5,
-                }}
-              >
-                {item.label}
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Right — animated outcome cards */}
+        <OutcomeCards />
       </div>
     </div>
   );
