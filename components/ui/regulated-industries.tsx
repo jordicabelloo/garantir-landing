@@ -1,7 +1,5 @@
 "use client";
 
-import { GenerativeMountainScene } from "./mountain-scene";
-
 const INDUSTRIES = [
   {
     label: "Finance & Accounts Payable",
@@ -139,18 +137,6 @@ export function RegulatedIndustries() {
         </p>
       </div>
 
-      {/* Three.js generative terrain — decorative background effect */}
-      <div
-        style={{
-          position: "relative",
-          height: 300,
-          overflow: "hidden",
-          marginTop: "4rem",
-          borderRadius: "4px",
-        }}
-      >
-        <GenerativeMountainScene />
-      </div>
     </div>
   );
 }

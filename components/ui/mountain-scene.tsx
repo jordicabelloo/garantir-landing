@@ -19,8 +19,8 @@ export function GenerativeMountainScene() {
       0.1,
       100
     );
-    camera.position.set(0, 1.5, 3);
-    camera.rotation.x = -0.3;
+    camera.position.set(0, 0.1, 3.2);
+    camera.rotation.x = -0.08;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(el.clientWidth, el.clientHeight);
@@ -37,8 +37,8 @@ export function GenerativeMountainScene() {
       uniforms: {
         time: { value: 0 },
         pointLightPosition: { value: new THREE.Vector3(0, 0, 5) },
-        // Signal green tones matching Garantir palette
-        color: { value: new THREE.Color("#4a6b0e") },
+        // Lighter olive green matching Garantir palette
+        color: { value: new THREE.Color("#8cb830") },
       },
       vertexShader: `
         uniform float time;
@@ -95,10 +95,10 @@ export function GenerativeMountainScene() {
         void main() {
           vNormal = normal;
           vPosition = position;
-          float noiseFreq = 0.8;
-          float noiseAmp = 0.6;
-          float d = snoise(vec3(position.x * noiseFreq, position.y * noiseFreq - time * 0.15, 0.0)) * noiseAmp;
-          d += snoise(vec3(position.x * noiseFreq * 2.0, position.y * noiseFreq * 2.0 - time * 0.15, 0.0)) * (noiseAmp * 0.5);
+          float noiseFreq = 0.75;
+          float noiseAmp = 0.85;
+          float d = snoise(vec3(position.x * noiseFreq, position.y * noiseFreq - time * 0.12, 0.0)) * noiseAmp;
+          d += snoise(vec3(position.x * noiseFreq * 2.2, position.y * noiseFreq * 2.2 - time * 0.12, 0.0)) * (noiseAmp * 0.45);
           vec3 newPosition = position + normal * d;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
         }
@@ -114,9 +114,9 @@ export function GenerativeMountainScene() {
           vec3 lightDir = normalize(pointLightPosition - vPosition);
           float diffuse = max(dot(n, lightDir), 0.0);
           float fresnel = pow(1.0 - dot(n, vec3(0.0, 0.0, 1.0)), 2.0);
-          vec3 finalColor = color * (diffuse + fresnel * 0.4);
-          // Fade alpha toward viewer edges for a soft blend
-          float alpha = 0.55 + diffuse * 0.3;
+          vec3 finalColor = color * (0.4 + diffuse * 0.8 + fresnel * 0.3);
+          // Alpha: opaque at terrain base, fade out toward sky
+          float alpha = 0.75 + diffuse * 0.2;
           gl_FragColor = vec4(finalColor, alpha);
         }
       `,
@@ -124,6 +124,7 @@ export function GenerativeMountainScene() {
 
     const mesh = new THREE.Mesh(geometry, material);
     mesh.rotation.x = -Math.PI / 2;
+    mesh.position.y = -0.6; // push base below camera line so peaks rise into frame
     scene.add(mesh);
 
     const pointLight = new THREE.PointLight(0xffffff, 1, 100);

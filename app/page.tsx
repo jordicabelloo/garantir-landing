@@ -12,6 +12,7 @@ import { InvoiceComparison } from "@/components/ui/invoice-comparison";
 import { GarantirFaq } from "@/components/ui/garantir-faq";
 import { BlindDeployment } from "@/components/ui/blind-deployment";
 import { RegulatedIndustries } from "@/components/ui/regulated-industries";
+import { GenerativeMountainScene } from "@/components/ui/mountain-scene";
 
 export default function LandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -123,10 +124,14 @@ const openModal = useCallback(() => setModalOpen(true), []);
         </section>
 
         {/* SECTION 3 */}
-        <section style={{ padding: '96px 0', borderTop: '1px dashed rgba(14,13,11,0.25)' }}>
+        <section style={{ paddingTop: '96px', paddingBottom: 0, borderTop: '1px dashed rgba(14,13,11,0.25)', overflow: 'hidden' }}>
           <div className="w-[calc(100%-20rem)] mx-auto px-16">
             <h2>Built for regulated industries</h2>
             <RegulatedIndustries />
+          </div>
+          {/* Full-width terrain anchored to section bottom */}
+          <div style={{ position: 'relative', height: 280, width: '100%', marginTop: '4rem' }}>
+            <GenerativeMountainScene />
           </div>
         </section>
 
